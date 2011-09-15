@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<title>Slideshow</title>
+		<link href="slideshow.css" rel="stylesheet" type="text/css" />
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="slideshow.js"></script>
+	</head>
+	<body onload="load()" onkeydown="slideControl(event)">
+		<div class="presentation">
+			<article class="slides">
+				<section class="slide" id="landing-slide">
+					test 1<br/>
+						omg omg omg omgo mg<br/>
+						zyrdate comes in a little glass vial<br/>
+						a little glass vial?<br/>
+						<figure>http://a5.sphotos.ak.fbcdn.net/hphotos-ak-snc6/281365_1974359925210_1429413036_31813646_5487964_n.jpg
+							<img src="lib/sample/eskimo_nebula.jpg" width="50%" height="50%" />
+							<figcaption>Eskimo Nebula</figcaption>
+						</figure>
+					<aside class="note">
+						Speaker notes!
+					</aside>
+				</section>
+				
+				
+				<section class="slide" id="landing-slide-2">
+					test 2
+
+					<aside class="note">
+						Speaker notes!
+					</aside>
+				</section>
+				
+				
+				<section class="slide" id="landing-slide-3">
+					test 3
+
+					<aside class="note">
+						Speaker notes!
+					</aside>
+				</section>
+			</article> <!-- end article class "slides" -->
+			<div class="menus">
+				<aside class="controls">
+					<div onclick="previousSlide()">
+						<img src="lib/controls/arrow-left.gif" /> Back
+					</div>
+					<div onclick="nextSlide()" >
+						<img src="lib/controls/arrow-right.gif" /> Next
+					</div>
+					<div onclick="" >
+						<img src="lib/controls/home.gif" /> Home
+					</div>
+				</aside> <!-- end article class "controls" -->
+				<aside class="help">
+					Use arrows to navigate.<br/>
+					'H' toggles help pane.<br/>
+					'C' toggles clickable controls.<br/>
+					Spacebar animates slide actions.<br/>
+				</aside> <!-- end aside class "help" -->
+			</div> <!-- end div class "menus" -->
+		</div> <!-- end div class "presentation" -->
+	</body>
+</html>

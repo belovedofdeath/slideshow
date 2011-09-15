@@ -1,0 +1,23 @@
+blockquote {
+	background-color: #ccc;
+	border: 1px solid #aaa;
+}
+
+figure {
+	border: 2px dotted black;
+}
+
+header {
+	font-size: 32px;
+	font-weight: bold;
+	margin: auto auto auto auto;
+}
+
+img.left {
+	position: relative;
+	float: left;
+}
+
+ul li {
+	font-size: 22px;
+}

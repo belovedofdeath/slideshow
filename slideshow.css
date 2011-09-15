@@ -1,0 +1,74 @@
+html {
+	overflow: hidden;
+	font-family: "arial", sans-serif;
+	font-size: 18px;
+	color: #333333;
+}
+
+body {
+	display: table;
+	position: static;
+	width: 100%;
+	height: 100%;
+	background-color: #27001f;
+}
+
+.presentation {
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.slides {
+	width: 80%;
+	height: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 30px;
+	background-color: #fff;
+}
+
+.slide {
+	width: 75%;
+	height: 75%;
+	display: none;
+	opacity: 1;
+	-webkit-transition: opacity 10s ease-in-out;
+	-moz-transition: opacity 10s ease-in-out;
+	-o-transition: opacity 10s ease-in-out;
+	-ms-transition: opacity 10s ease-in-out;
+	transition: opacity 10s ease-in-out;
+}
+
+.note {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	border: 2px solid black;
+	background-color: white;
+	opacity: .6;
+	display: none;
+}
+
+.menus {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	padding: 6px;
+	width: 10%;
+}
+
+.help, .controls {
+	opacity: .6;
+	position: relative;
+	width: 100%;
+	background-color: #fff;
+	display: none;
+}
+
+.border-testing {
+	border: 2px yellow dashed;
+}

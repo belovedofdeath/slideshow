@@ -1,0 +1,20 @@
+file structure:
+	/lib - for any libraries that might need to be included.  likely this will need to be taken out.
+	/media - for any images, movies, sound clips, etc that are used in the slides
+	slideshow.css - governs the appearance of the slides, and many other important features like animation
+	style.css - styling elements specific for content within the slides themselves
+	your.css - where you put your personal css preferences
+	slideshow.js - governs the action of the slides
+	index.htm - the slides themselves
+
+file setup: index.htm
+	body is comprised of nested <div> tags
+	<div class="presentation"> - encompasses the entire screen window and presentation
+		<article class="slides"> - encompasses all of the slides and the portion of the window that they animate through
+			<section class="slide" id="..."> - an individual slide. there are many of these
+				<header> - the heading for the slide
+				<figure> - for putting figures into the slide
+					<blockquote><p><code> - for putting code in the figure
+					<figcaption> - optional explanation
+				<aside class="note"> - a speaker note added at the bottom of the slide div. only one per slide
+		<aside class="menu"> - used for menu items
