@@ -1,4 +1,4 @@
-file structure:
+directory structure:
 	/lib - for any libraries that might need to be included.  likely this will need to be taken out.
 	/media - for any images, movies, sound clips, etc that are used in the slides
 	slideshow.css - governs the appearance of the slides, and many other important features like animation
