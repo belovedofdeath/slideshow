@@ -16,5 +16,14 @@ file setup: index.htm
 				<figure> - for putting figures into the slide
 					<blockquote><p><code> - for putting code in the figure
 					<figcaption> - optional explanation
-				<aside class="note"> - a speaker note added at the bottom of the slide div. only one per slide
-		<aside class="menu"> - used for menu items
+				<aside class="note"> - (toggleable) a speaker note added at the bottom of the slide div. only one per slide
+		<div class="menus"> - holds both contextual menus
+			<aside class="controls"> - (toggleable) used for menu items
+			<aside class="help"> - (toggleable) used to display help items
+
+in-slide controls
+	Right Arrow - next slide
+	Left Arrow - previous slide
+	'n' - toggle speaker Notes pane
+	'c' - toggle clickable Controls pane
+	'h' - toggle Help pane
