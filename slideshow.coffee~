@@ -1,5 +1,9 @@
 slideCount = 0 # index of array for <section class="slide">
 speakerNotesShown = helpMenuShown = controlsShown = false
+slides = getElementsByClass('slide', null, 'section')
+notes = getElementsByClass('note', null, 'aside')
+help = getElementsByClass('help', null, 'aside')
+controls = getElementsByClass('controls', null, 'aside')
 
 load = ->
   console.log window.location.hash
@@ -93,5 +97,8 @@ getElementsByClass = (searchClass, node, tag) ->
   pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)")
   j = 0
   for elem in elems
-    if pattern.test(elem
+    if pattern.test(elem.className)
+      classElements[j] = elem
+      j++
+  return classElements
 

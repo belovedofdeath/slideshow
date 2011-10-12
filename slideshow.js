@@ -1,21 +1,24 @@
-var controlsMenu, controlsShown, getElementsByClass, helpMenu, helpMenuShown, load, nextSlide, previousSlide, slideControl, slideCount, speakerNotes, speakerNotesShown;
+var controls, controlsMenu, controlsShown, getElementsByClass, help, helpMenu, helpMenuShown, load, nextSlide, notes, previousSlide, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
 slideCount = 0;
 speakerNotesShown = helpMenuShown = controlsShown = false;
+slides = getElementsByClass('slide', null, 'section');
+notes = getElementsByClass('note', null, 'aside');
+help = getElementsByClass('help', null, 'aside');
+controls = getElementsByClass('controls', null, 'aside');
 load = function() {
-  var elem, elems, slide, _i, _j, _len, _len2, _results;
+  var slide, _i, _j, _len, _len2, _results;
   console.log(window.location.hash);
-  elems = getElementsByClass('slide', null, 'section');
   if (window.location.hash == null) {
-    for (_i = 0, _len = elems.length; _i < _len; _i++) {
-      elem = elems[_i];
-      if (window.location.hash.slice(1) === elem.id) {
+    for (_i = 0, _len = slides.length; _i < _len; _i++) {
+      slide = slides[_i];
+      if (window.location.hash.slice(1) === slide.id) {
         slideCount = _i;
       }
     }
   }
   _results = [];
-  for (_j = 0, _len2 = elems.length; _j < _len2; _j++) {
-    slide = elems[_j];
+  for (_j = 0, _len2 = slides.length; _j < _len2; _j++) {
+    slide = slides[_j];
     _results.push(i === slideCount ? (slide.style.display = 'inline', slide.style.opacity = 1) : (slide.style.display = 'none', slide.style.opacity = 0));
   }
   return _results;
@@ -35,66 +38,57 @@ slideControl = function(event) {
   }
 };
 nextSlide = function() {
-  var elems;
-  elems = getElementsByClass('slide', null, 'section');
-  elems[slideCount].style.display = 'none';
-  elems[slideCount].style.opacity = 0;
-  if (slideCount < elems.length(-1)) {
+  slides[slideCount].style.display = 'none';
+  slides[slideCount].style.opacity = 0;
+  if (slideCount < slides.length(-1)) {
     slideCount++;
   }
-  window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + elems[slideCount].id);
-  elems[slideCount].style.display = 'inline';
-  elems[slideCount].style.opacity = 1;
-  elems[slideCount].style.position = 'relative';
-  return elems[slideCount].style.left = '0px';
+  window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + slides[slideCount].id);
+  slides[slideCount].style.display = 'inline';
+  slides[slideCount].style.opacity = 1;
+  slides[slideCount].style.position = 'relative';
+  return slides[slideCount].style.left = '0px';
 };
 previousSlide = function() {
-  var elems;
-  elems = getElementsByClass('slide', null, 'section');
-  elems[slideCount].style.display = 'none';
-  elems[slideCount].style.opacity = 0;
+  slides[slideCount].style.display = 'none';
+  slides[slideCount].style.opacity = 0;
   if (slideCount > 0) {
     slideCount--;
   }
-  window.history.pushState('string 2', 'title', '/slideshow/index.htm#' + elems[slideCount].id);
-  elems[slideCount].style.display = 'inline';
-  elems[slideCount].style.opacity = 1;
-  elems[slideCount].style.position = 'relative';
-  return elems[slideCount].style.left = '0px';
+  window.history.pushState('string 2', 'title', '/slideshow/index.htm#' + slides[slideCount].id);
+  slides[slideCount].style.display = 'inline';
+  slides[slideCount].style.opacity = 1;
+  slides[slideCount].style.position = 'relative';
+  return slides[slideCount].style.left = '0px';
 };
 speakerNotes = function() {
-  var elems, note, _i, _j, _len, _len2;
-  elems = getElementsByClass('note', null, 'aside');
+  var note, _i, _j, _len, _len2;
   if (speakerNotesShown) {
-    for (_i = 0, _len = elems.length; _i < _len; _i++) {
-      note = elems[_i];
+    for (_i = 0, _len = notes.length; _i < _len; _i++) {
+      note = notes[_i];
       note.style.display = 'none';
     }
   } else {
-    for (_j = 0, _len2 = elems.length; _j < _len2; _j++) {
-      note = elems[_j];
+    for (_j = 0, _len2 = notes.length; _j < _len2; _j++) {
+      note = notes[_j];
       note.style.display = 'inline';
     }
   }
   return speakerNotesShown = !speakerNotesShown;
 };
 helpMenu = function() {
-  var elems;
-  elems = getElementsByClass('help', null, 'aside');
   if (helpMenuShown) {
-    elems[0].style.display = 'none';
+    help[0].style.display = 'none';
   } else {
-    elems[0].style.display = 'block';
+    help[0].style.display = 'block';
   }
   return helpMenuShown = !helpMenuShown;
 };
 controlsMenu = function() {
-  var elems;
-  elems = getElementsByClass('controls', null, 'aside');
   if (controlsShown) {
-    elems[0].style.display = 'none';
+    controls[0].style.display = 'none';
   } else {
-    elems[0].style.display = 'block';
+    controls[0].style.display = 'block';
   }
   return controlsShown = !controlsShown;
 };
