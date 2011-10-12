@@ -8,19 +8,16 @@ function load()
 {
 	console.log(window.location.hash);
 	elems = getElementsByClass("slide", null, "section");
-	
+
 	//if the hash tag is set, change the slideCount number
-	if (window.location.hash != "")
-	{
-		for (i = 0; i < elems.length; i++)
-		{
-			if (elems[i].id == window.location.hash.slice(1))
-			{
+	if (window.location.hash != "")	{
+		for (i = 0; i < elems.length; i++) {
+			if (elems[i].id == window.location.hash.slice(1))	{
 				slideCount = i;
 			}
 		}
 	}
-	
+
 	for (i = 0;  i < elems.length; i++)
 	{
 		if (i == slideCount)
@@ -152,7 +149,7 @@ function controlsMenu()
 	}
 	controlsShown = !controlsShown;
 }
- 
+
 function getElementsByClass(searchClass,node,tag) {
 	var classElements = new Array();
 	if ( node == null )
@@ -170,3 +167,4 @@ function getElementsByClass(searchClass,node,tag) {
 	}
 	return classElements;
 }
+

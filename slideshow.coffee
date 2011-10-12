@@ -45,4 +45,56 @@ nextSlide = ->
   elems[slideCount].style.left = '0px' # why do i have this in here in the JS again???
 
 previousSlide = ->
+  elems = getElementsByClass('slide', null, 'section')
+  elems[slideCount].style.display = 'none'
+  elems[slideCount].style.opacity = 0
+  # make sure it doesn't go out of bounds
+  slideCount-- if slideCount > 0
+  window.history.pushState('string 2', 'title', '/slideshow/index.htm#' + elems[slideCount].id)
+  elems[slideCount].style.display = 'inline'
+  elems[slideCount].style.opacity = 1
+  elems[slideCount].style.position = 'relative'
+  elems[slideCount].style.left = '0px'
+
+speakerNotes = ->
+  elems = getElementsByClass('note', null, 'aside')
+  if speakerNotesShown
+    # change CSS so that speaker notes are hidden
+    for note in elems
+      note.style.display = 'none'
+  else
+    # change CSS so that speaker notes are shown
+    for note in elems
+      note.style.display = 'inline'
+  speakerNotesShown = !speakerNotesShown
+
+helpMenu = ->
+  elems = getElementsByClass('help', null, 'aside')
+  if helpMenuShown
+    elems[0].style.display = 'none'
+  else
+    elems[0].style.display = 'block'
+  helpMenuShown = !helpMenuShown
+
+controlsMenu = ->
+  elems = getElementsByClass('controls', null, 'aside')
+  if controlsShown
+    elems[0].style.display = 'none'
+  else
+    elems[0].style.display = 'block'
+  controlsShown = !controlsShown
+
+getElementsByClass = (searchClass, node, tag) ->
+  if node == null
+    node = document
+  if tag == null
+    tag = '*'
+  elems = node.getElementsByTagName(tag)
+  pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)")
+  j = 0
+  for elem in elems
+    if pattern.test(elem.className)
+      classElements[j] = elem
+      j++
+  return classElements
 
