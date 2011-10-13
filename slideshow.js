@@ -1,4 +1,4 @@
-var controls, controlsMenu, controlsShown, getElementsByClass, help, helpMenu, helpMenuShown, load, nextSlide, notes, previousSlide, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
+var changeSlide, controls, controlsMenu, controlsShown, display, getElementsByClass, help, helpMenu, helpMenuShown, hide, load, notes, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
 slideCount = 0;
 speakerNotesShown = helpMenuShown = controlsShown = false;
 slides = getElementsByClass('slide', null, 'section');
@@ -28,20 +28,27 @@ slideControl = function(event) {
     case 'n':
       return speakerNotes();
     case 37:
-      return previousSlide();
+      return changeSlide('previous');
     case 39:
-      return nextSlide();
+      return changeSlide('next');
     case 'h':
       return helpMenu();
     case 'c':
       return controlsMenu();
   }
 };
-nextSlide = function() {
+changeSlide = function(direction) {
   slides[slideCount].style.display = 'none';
   slides[slideCount].style.opacity = 0;
-  if (slideCount < slides.length(-1)) {
-    slideCount++;
+  if (direction === 'next') {
+    if (slideCount < slides.length(-1)) {
+      slideCount++;
+    }
+  }
+  if (direction === 'previous') {
+    if (slideCount > 0) {
+      slideCount--;
+    }
   }
   window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + slides[slideCount].id);
   slides[slideCount].style.display = 'inline';
@@ -49,48 +56,53 @@ nextSlide = function() {
   slides[slideCount].style.position = 'relative';
   return slides[slideCount].style.left = '0px';
 };
-previousSlide = function() {
-  slides[slideCount].style.display = 'none';
-  slides[slideCount].style.opacity = 0;
-  if (slideCount > 0) {
-    slideCount--;
-  }
-  window.history.pushState('string 2', 'title', '/slideshow/index.htm#' + slides[slideCount].id);
-  slides[slideCount].style.display = 'inline';
-  slides[slideCount].style.opacity = 1;
-  slides[slideCount].style.position = 'relative';
-  return slides[slideCount].style.left = '0px';
-};
 speakerNotes = function() {
-  var note, _i, _j, _len, _len2;
   if (speakerNotesShown) {
-    for (_i = 0, _len = notes.length; _i < _len; _i++) {
-      note = notes[_i];
-      note.style.display = 'none';
-    }
-  } else {
-    for (_j = 0, _len2 = notes.length; _j < _len2; _j++) {
-      note = notes[_j];
-      note.style.display = 'inline';
-    }
+    hide(notes);
+  }
+  if (!speakerNotesShown) {
+    display(notes, 'inline');
   }
   return speakerNotesShown = !speakerNotesShown;
 };
 helpMenu = function() {
   if (helpMenuShown) {
-    help[0].style.display = 'none';
-  } else {
-    help[0].style.display = 'block';
+    hide(help);
+  }
+  if (!helpMenuShown) {
+    display(help);
   }
   return helpMenuShown = !helpMenuShown;
 };
 controlsMenu = function() {
   if (controlsShown) {
-    controls[0].style.display = 'none';
-  } else {
-    controls[0].style.display = 'block';
+    hide(controls);
+  }
+  if (!controlsShown) {
+    display(controls);
   }
   return controlsShown = !controlsShown;
+};
+hide = function(group) {
+  var thing, _i, _len, _results;
+  _results = [];
+  for (_i = 0, _len = group.length; _i < _len; _i++) {
+    thing = group[_i];
+    _results.push(thing.style.display = 'none');
+  }
+  return _results;
+};
+display = function(group, displayType) {
+  var thing, _i, _len, _results;
+  if (displayType == null) {
+    displayType = 'block';
+  }
+  _results = [];
+  for (_i = 0, _len = group.length; _i < _len; _i++) {
+    thing = group[_i];
+    _results.push(thing.style.display = display);
+  }
+  return _results;
 };
 getElementsByClass = function(searchClass, node, tag) {
   var elem, elems, j, pattern, _i, _len;

@@ -7,11 +7,10 @@ controls = getElementsByClass('controls', null, 'aside')
 
 load = ->
   console.log window.location.hash
-  elems = getElementsByClass('slide', null, 'section')
   unless window.location.hash?
-    for elem in elems
-      slideCount = _i if window.location.hash.slice(1) is elem.id
-  for slide in elems
+    for slide in slides
+      slideCount = _i if window.location.hash.slice(1) is slide.id
+  for slide in slides
     if i is slideCount
       slide.style.display = 'inline'
       slide.style.opacity = 1
@@ -25,10 +24,10 @@ slideControl = (event) ->
       speakerNotes()
     when 37
       # left arrow
-      previousSlide()
+      changeSlide('previous')
     when 39
       # right arrow
-      nextSlide()
+      changeSlide('next')
     when 'h'
       helpMenu()
     when 'c'
@@ -36,57 +35,44 @@ slideControl = (event) ->
     else
       # do nothing
 
-nextSlide = ->
-  elems = getElementsByClass('slide', null, 'section')
-  elems[slideCount].style.display = 'none'
-  elems[slideCount].style.opacity = 0
+changeSlide = (direction) ->
+  slides[slideCount].style.display = 'none'
+  slides[slideCount].style.opacity = 0
   # make sure it doesn't go out of bounds
-  slideCount++ if slideCount < elems.length -1
-  window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + elems[slideCount].id)
-  elems[slideCount].style.display = 'inline'
-  elems[slideCount].style.opacity = 1
-  elems[slideCount].style.position = 'relative'
-  elems[slideCount].style.left = '0px' # why do i have this in here in the JS again???
-
-previousSlide = ->
-  elems = getElementsByClass('slide', null, 'section')
-  elems[slideCount].style.display = 'none'
-  elems[slideCount].style.opacity = 0
-  # make sure it doesn't go out of bounds
-  slideCount-- if slideCount > 0
-  window.history.pushState('string 2', 'title', '/slideshow/index.htm#' + elems[slideCount].id)
-  elems[slideCount].style.display = 'inline'
-  elems[slideCount].style.opacity = 1
-  elems[slideCount].style.position = 'relative'
-  elems[slideCount].style.left = '0px'
+  if direction is 'next'
+    slideCount++ if slideCount < slides.length -1
+  if direction is 'previous'
+    slideCount-- if slideCount > 0
+  window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + slides[slideCount].id)
+  slides[slideCount].style.display = 'inline'
+  slides[slideCount].style.opacity = 1
+  slides[slideCount].style.position = 'relative'
+  slides[slideCount].style.left = '0px'
 
 speakerNotes = ->
-  elems = getElementsByClass('note', null, 'aside')
-  if speakerNotesShown
-    # change CSS so that speaker notes are hidden
-    for note in elems
-      note.style.display = 'none'
-  else
-    # change CSS so that speaker notes are shown
-    for note in elems
-      note.style.display = 'inline'
+  hide(notes) if speakerNotesShown
+  display(notes, 'inline') unless speakerNotesShown
   speakerNotesShown = !speakerNotesShown
 
 helpMenu = ->
-  elems = getElementsByClass('help', null, 'aside')
-  if helpMenuShown
-    elems[0].style.display = 'none'
-  else
-    elems[0].style.display = 'block'
+  hide(help) if helpMenuShown
+  display(help) unless helpMenuShown
   helpMenuShown = !helpMenuShown
 
 controlsMenu = ->
-  elems = getElementsByClass('controls', null, 'aside')
-  if controlsShown
-    elems[0].style.display = 'none'
-  else
-    elems[0].style.display = 'block'
+  hide(controls) if controlsShown
+  display(controls) unless controlsShown
   controlsShown = !controlsShown
+
+hide = (group) ->
+  for thing in group
+    thing.style.display = 'none'
+
+display = (group, displayType) ->
+  unless displayType?
+    displayType = 'block'
+  for thing in group
+    thing.style.display = display
 
 getElementsByClass = (searchClass, node, tag) ->
   if node == null

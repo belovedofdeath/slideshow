@@ -24,10 +24,10 @@ slideControl = (event) ->
       speakerNotes()
     when 37
       # left arrow
-      previousSlide()
+      changeSlide('previous')
     when 39
       # right arrow
-      nextSlide()
+      changeSlide('next')
     when 'h'
       helpMenu()
     when 'c'
@@ -35,52 +35,45 @@ slideControl = (event) ->
     else
       # do nothing
 
-nextSlide = ->
+changeSlide = (direction) ->
   slides[slideCount].style.display = 'none'
   slides[slideCount].style.opacity = 0
   # make sure it doesn't go out of bounds
-  slideCount++ if slideCount < slides.length -1
+  if direction is 'next'
+    slideCount++ if slideCount < slides.length -1
+  if direction is 'previous'
+    slideCount-- if slideCount > 0
   window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + slides[slideCount].id)
-  slides[slideCount].style.display = 'inline'
-  slides[slideCount].style.opacity = 1
-  slides[slideCount].style.position = 'relative'
-  slides[slideCount].style.left = '0px' # why do i have this in here in the JS again???
-
-previousSlide = ->
-  slides[slideCount].style.display = 'none'
-  slides[slideCount].style.opacity = 0
-  # make sure it doesn't go out of bounds
-  slideCount-- if slideCount > 0
-  window.history.pushState('string 2', 'title', '/slideshow/index.htm#' + slides[slideCount].id)
+  # need to make this into a css style instead of hard-coded specifying here
   slides[slideCount].style.display = 'inline'
   slides[slideCount].style.opacity = 1
   slides[slideCount].style.position = 'relative'
   slides[slideCount].style.left = '0px'
 
 speakerNotes = ->
-  if speakerNotesShown
-    # change CSS so that speaker notes are hidden
-    for note in notes
-      note.style.display = 'none'
-  else
-    # change CSS so that speaker notes are shown
-    for note in notes
-      note.style.display = 'inline'
+  hide(notes) if speakerNotesShown
+  display(notes, 'inline') unless speakerNotesShown
   speakerNotesShown = !speakerNotesShown
 
 helpMenu = ->
-  if helpMenuShown
-    help[0].style.display = 'none'
-  else
-    help[0].style.display = 'block'
+  hide(help) if helpMenuShown
+  display(help) unless helpMenuShown
   helpMenuShown = !helpMenuShown
 
 controlsMenu = ->
-  if controlsShown
-    controls[0].style.display = 'none'
-  else
-    controls[0].style.display = 'block'
+  hide(controls) if controlsShown
+  display(controls) unless controlsShown
   controlsShown = !controlsShown
+
+hide = (group) ->
+  for thing in group
+    thing.style.display = 'none'
+
+display = (group, displayType) ->
+  unless displayType?
+    displayType = 'block'
+  for thing in group
+    thing.style.display = display
 
 getElementsByClass = (searchClass, node, tag) ->
   if node == null
