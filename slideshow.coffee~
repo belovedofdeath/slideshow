@@ -7,33 +7,59 @@ controls = getElementsByClass('controls', null, 'aside')
 
 load = ->
   console.log window.location.hash
-  unless window.location.hash?
-    for slide in slides
-      slideCount = _i if window.location.hash.slice(1) is slide.id
-  for slide in slides
+  elems = getElementsByClass("slide", null, "section")
+  unless window.location.hash is ""
+    i = 0
+    while i < elems.length
+      slideCount = i  if elems[i].id is window.location.hash.slice(1)
+      i++
+  i = 0
+  while i < elems.length
     if i is slideCount
-      slide.style.display = 'inline'
-      slide.style.opacity = 1
+      elems[i].style.display = "inline"
+      elems[i].style.opacity = 1
     else
-      slide.style.display = 'none'
-      slide.style.opacity = 0
+      elems[i].style.display = "none"
+      elems[i].style.opacity = 0.0
+    i++
 
 slideControl = (event) ->
-  switch String.fromCharCode(event.which).toLowerCase() or event.which
-    when 'n'
+  switch event.which
+    when 110, 78
       speakerNotes()
     when 37
-      # left arrow
-      changeSlide('previous')
+      previousSlide()
     when 39
-      # right arrow
-      changeSlide('next')
-    when 'h'
+      nextSlide()
+    when 72
       helpMenu()
-    when 'c'
+    when 67
       controlsMenu()
     else
-      # do nothing
+
+nextSlide = ->
+  elems = getElementsByClass("slide", null, "section")
+  elems[slideCount].style.display = "none"
+  elems[slideCount].style.opacity = 0
+  slideCount++  if slideCount < (elems.length - 1)
+  window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
+  elems[slideCount].style.display = "inline"
+  elems[slideCount].style.opacity = 1
+  elems[slideCount].style.position = "relative"
+  elems[slideCount].style.left = "0px"
+
+previousSlide = ->
+  elems = getElementsByClass("slide", null, "section")
+  elems[slideCount].style.display = "none"
+  elems[slideCount].style.opacity = 0
+  slideCount--  if slideCount > 0
+  window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
+  elems[slideCount].style.display = "inline"
+  elems[slideCount].style.opacity = 1
+  elems[slideCount].style.position = "relative"
+  elems[slideCount].style.left = "0px"
+
+
 
 changeSlide = (direction) ->
   slides[slideCount].style.display = 'none'
@@ -44,6 +70,7 @@ changeSlide = (direction) ->
   if direction is 'previous'
     slideCount-- if slideCount > 0
   window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + slides[slideCount].id)
+  # need to make this into a css style instead of hard-coded specifying here
   slides[slideCount].style.display = 'inline'
   slides[slideCount].style.opacity = 1
   slides[slideCount].style.position = 'relative'
@@ -75,10 +102,8 @@ display = (group, displayType) ->
     thing.style.display = display
 
 getElementsByClass = (searchClass, node, tag) ->
-  if node == null
-    node = document
-  if tag == null
-    tag = '*'
+  unless node? node = document
+  unless tag? tag = '*'
   elems = node.getElementsByTagName(tag)
   pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)")
   j = 0

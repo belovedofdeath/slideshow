@@ -116,6 +116,7 @@ function speakerNotes()
 				elems[i].style.display = "inline";
 		}
 	}
+
 	speakerNotesShown = !speakerNotesShown;
 }
 

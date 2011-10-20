@@ -1,4 +1,4 @@
-var changeSlide, controls, controlsMenu, controlsShown, display, getElementsByClass, help, helpMenu, helpMenuShown, hide, load, notes, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
+var changeSlide, controls, controlsMenu, controlsShown, display, getElementsByClass, help, helpMenu, helpMenuShown, hide, load, nextSlide, notes, previousSlide, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
 slideCount = 0;
 speakerNotesShown = helpMenuShown = controlsShown = false;
 slides = getElementsByClass('slide', null, 'section');
@@ -6,36 +6,74 @@ notes = getElementsByClass('note', null, 'aside');
 help = getElementsByClass('help', null, 'aside');
 controls = getElementsByClass('controls', null, 'aside');
 load = function() {
-  var slide, _i, _j, _len, _len2, _results;
+  var elems, i, _results;
   console.log(window.location.hash);
-  if (window.location.hash == null) {
-    for (_i = 0, _len = slides.length; _i < _len; _i++) {
-      slide = slides[_i];
-      if (window.location.hash.slice(1) === slide.id) {
-        slideCount = _i;
+  elems = getElementsByClass("slide", null, "section");
+  if (window.location.hash !== "") {
+    i = 0;
+    while (i < elems.length) {
+      if (elems[i].id === window.location.hash.slice(1)) {
+        slideCount = i;
       }
+      i++;
     }
   }
+  i = 0;
   _results = [];
-  for (_j = 0, _len2 = slides.length; _j < _len2; _j++) {
-    slide = slides[_j];
-    _results.push(i === slideCount ? (slide.style.display = 'inline', slide.style.opacity = 1) : (slide.style.display = 'none', slide.style.opacity = 0));
+  while (i < elems.length) {
+    if (i === slideCount) {
+      elems[i].style.display = "inline";
+      elems[i].style.opacity = 1;
+    } else {
+      elems[i].style.display = "none";
+      elems[i].style.opacity = 0.0;
+    }
+    _results.push(i++);
   }
   return _results;
 };
 slideControl = function(event) {
-  switch (String.fromCharCode(event.which).toLowerCase() || event.which) {
-    case 'n':
+  switch (event.which) {
+    case 110:
+    case 78:
       return speakerNotes();
     case 37:
-      return changeSlide('previous');
+      return previousSlide();
     case 39:
-      return changeSlide('next');
-    case 'h':
+      return nextSlide();
+    case 72:
       return helpMenu();
-    case 'c':
+    case 67:
       return controlsMenu();
   }
+};
+nextSlide = function() {
+  var elems;
+  elems = getElementsByClass("slide", null, "section");
+  elems[slideCount].style.display = "none";
+  elems[slideCount].style.opacity = 0;
+  if (slideCount < (elems.length - 1)) {
+    slideCount++;
+  }
+  window.history.pushState("string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id);
+  elems[slideCount].style.display = "inline";
+  elems[slideCount].style.opacity = 1;
+  elems[slideCount].style.position = "relative";
+  return elems[slideCount].style.left = "0px";
+};
+previousSlide = function() {
+  var elems;
+  elems = getElementsByClass("slide", null, "section");
+  elems[slideCount].style.display = "none";
+  elems[slideCount].style.opacity = 0;
+  if (slideCount > 0) {
+    slideCount--;
+  }
+  window.history.pushState("string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id);
+  elems[slideCount].style.display = "inline";
+  elems[slideCount].style.opacity = 1;
+  elems[slideCount].style.position = "relative";
+  return elems[slideCount].style.left = "0px";
 };
 changeSlide = function(direction) {
   slides[slideCount].style.display = 'none';
@@ -106,10 +144,10 @@ display = function(group, displayType) {
 };
 getElementsByClass = function(searchClass, node, tag) {
   var elem, elems, j, pattern, _i, _len;
-  if (node === null) {
+  if (node == null) {
     node = document;
   }
-  if (tag === null) {
+  if (tag == null) {
     tag = '*';
   }
   elems = node.getElementsByTagName(tag);
