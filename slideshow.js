@@ -1,14 +1,15 @@
-var changeSlide, controls, controlsMenu, controlsShown, display, getElementsByClass, help, helpMenu, helpMenuShown, hide, load, nextSlide, notes, previousSlide, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
+var changeSlide, controls, controlsMenu, controlsShown, display, help, helpMenu, helpMenuShown, hide, load, nextSlide, notes, previousSlide, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
 slideCount = 0;
 speakerNotesShown = helpMenuShown = controlsShown = false;
-slides = getElementsByClass('slide', null, 'section');
-notes = getElementsByClass('note', null, 'aside');
-help = getElementsByClass('help', null, 'aside');
-controls = getElementsByClass('controls', null, 'aside');
+console.log('about to look for slides');
+slides = getElementsByClassName('slide', null, 'section');
+notes = getElementsByClassName('note', null, 'aside');
+help = getElementsByClassName('help', null, 'aside');
+controls = getElementsByClassName('controls', null, 'aside');
 load = function() {
   var elems, i, _results;
-  console.log(window.location.hash);
-  elems = getElementsByClass("slide", null, "section");
+  console.log("window.location.hash: " + window.location.hash);
+  elems = getElementsByClassName("slide", null, "section");
   if (window.location.hash !== "") {
     i = 0;
     while (i < elems.length) {
@@ -49,7 +50,7 @@ slideControl = function(event) {
 };
 nextSlide = function() {
   var elems;
-  elems = getElementsByClass("slide", null, "section");
+  elems = getElementsByClassName("slide", null, "section");
   elems[slideCount].style.display = "none";
   elems[slideCount].style.opacity = 0;
   if (slideCount < (elems.length - 1)) {
@@ -63,7 +64,7 @@ nextSlide = function() {
 };
 previousSlide = function() {
   var elems;
-  elems = getElementsByClass("slide", null, "section");
+  elems = getElementsByClassName("slide", null, "section");
   elems[slideCount].style.display = "none";
   elems[slideCount].style.opacity = 0;
   if (slideCount > 0) {
@@ -141,24 +142,4 @@ display = function(group, displayType) {
     _results.push(thing.style.display = display);
   }
   return _results;
-};
-getElementsByClass = function(searchClass, node, tag) {
-  var elem, elems, j, pattern, _i, _len;
-  if (node == null) {
-    node = document;
-  }
-  if (tag == null) {
-    tag = '*';
-  }
-  elems = node.getElementsByTagName(tag);
-  pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)");
-  j = 0;
-  for (_i = 0, _len = elems.length; _i < _len; _i++) {
-    elem = elems[_i];
-    if (pattern.test(elem.className)) {
-      classElements[j] = elem;
-      j++;
-    }
-  }
-  return classElements;
 };
