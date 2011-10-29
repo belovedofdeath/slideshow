@@ -1,6 +1,6 @@
 var getElementsByClassName;
 getElementsByClassName = function(searchClass, node, tag) {
-  var classElements, elem, elems, j, pattern, _i, _len;
+  var classElements, elem, elems, j, _i, _len, _results;
   if (node == null) {
     node = 'document';
   }
@@ -8,15 +8,13 @@ getElementsByClassName = function(searchClass, node, tag) {
     tag = '*';
   }
   elems = document.getElementsByTagName(tag);
-  pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)");
+  console.log("elems: " + elems);
   j = 0;
   classElements = [];
+  _results = [];
   for (_i = 0, _len = elems.length; _i < _len; _i++) {
     elem = elems[_i];
-    if (pattern.test(elem.className)) {
-      classElements[j] = elem;
-      j++;
-    }
+    _results.push(elem.className ? (classElements[j] = elem, j++) : void 0);
   }
-  return classElements;
+  return _results;
 };

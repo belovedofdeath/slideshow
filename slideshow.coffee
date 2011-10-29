@@ -1,28 +1,48 @@
 slideCount = 0 # index of array for <section class="slide">
 speakerNotesShown = helpMenuShown = controlsShown = false
-console.log 'about to look for slides'
 slides = getElementsByClassName('slide', null, 'section')
 notes = getElementsByClassName('note', null, 'aside')
 help = getElementsByClassName('help', null, 'aside')
 controls = getElementsByClassName('controls', null, 'aside')
 
 load = ->
-  console.log "window.location.hash: #{window.location.hash}"
-  elems = getElementsByClassName("slide", null, "section")
-  unless window.location.hash is ""
-    i = 0
-    while i < elems.length
-      slideCount = i  if elems[i].id is window.location.hash.slice(1)
-      i++
-  i = 0
-  while i < elems.length
-    if i is slideCount
-      elems[i].style.display = "inline"
-      elems[i].style.opacity = 1
+  if slides?
+    console.log "slides are there!"
+    for test in slides
+      console.log "this is a slide!"
+    console.log slides
+  else
+    console.log "slides are missing"
+  console.log "window.location.hash: #{window.location.hash.slice(1)}"
+  unless window.location.hash.slice(1).length < 1 # for some reason using unless window.location.hash.slice(1)? ... didn't work
+    console.log "check"
+    console.log "slide #3 id: #{slides[2].id}"
+    for slide in slides # go through and see if the hash tag in the URL matches any of the ID's for the slides.  if not, keep the slideCount at 0
+      console.log "slide.id = #{slide.id}, hash = #{window.location.hash.slice(1)}"
+      if slide.id = window.location.hash.slice(1)
+        slideCount = _i
+  console.log "slideCount is currently #{slideCount}"
+  j = 0
+  for slide in slides # for some reason i can't refer to _j in here like i can refer to _i up above??
+    if slideCount = j
+      slide.style.display = 'inline'
+      slide.style.opacity = 1
     else
-      elems[i].style.display = "none"
-      elems[i].style.opacity = 0.0
+      slide.style.display = 'none'
+      slide.style.opacity = 0
+    j++
+  null
+  ### old:
+  i = 0
+  while i < slides.length
+    if i = slideCount
+      slides[i].style.display = "inline"
+      slides[i].style.opacity = 1
+    else
+      slides[i].style.display = "none"
+      slides[i].style.opacity = 0.0
     i++
+  ###
 
 slideControl = (event) ->
   switch event.which

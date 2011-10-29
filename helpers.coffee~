@@ -1,14 +1,12 @@
 getElementsByClassName = (searchClass, node, tag) ->
-  console.log "entering getElementByClassName(#{searchClass}, #{node}, #{tag})"
   unless node? then node = 'document'
   unless tag? then tag = '*'
   elems = document.getElementsByTagName(tag) # hardcoding in document for now
   pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)")
   j = 0
   classElements = [] # for some reason coffeescript didn't do this for me?
-  for elem in elems
+  for elem in elems # CS will automatically return the results of this array
     if pattern.test(elem.className)
       classElements[j] = elem
       j++
-  return classElements
 

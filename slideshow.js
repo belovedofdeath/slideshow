@@ -1,37 +1,59 @@
 var changeSlide, controls, controlsMenu, controlsShown, display, help, helpMenu, helpMenuShown, hide, load, nextSlide, notes, previousSlide, slideControl, slideCount, slides, speakerNotes, speakerNotesShown;
 slideCount = 0;
 speakerNotesShown = helpMenuShown = controlsShown = false;
-console.log('about to look for slides');
 slides = getElementsByClassName('slide', null, 'section');
 notes = getElementsByClassName('note', null, 'aside');
 help = getElementsByClassName('help', null, 'aside');
 controls = getElementsByClassName('controls', null, 'aside');
 load = function() {
-  var elems, i, _results;
-  console.log("window.location.hash: " + window.location.hash);
-  elems = getElementsByClassName("slide", null, "section");
-  if (window.location.hash !== "") {
-    i = 0;
-    while (i < elems.length) {
-      if (elems[i].id === window.location.hash.slice(1)) {
-        slideCount = i;
+  var j, slide, test, _i, _j, _k, _len, _len2, _len3;
+  if (slides != null) {
+    console.log("slides are there!");
+    for (_i = 0, _len = slides.length; _i < _len; _i++) {
+      test = slides[_i];
+      console.log("this is a slide!");
+    }
+    console.log(slides);
+  } else {
+    console.log("slides are missing");
+  }
+  console.log("window.location.hash: " + (window.location.hash.slice(1)));
+  if (!(window.location.hash.slice(1).length < 1)) {
+    console.log("check");
+    console.log("slide #3 id: " + slides[2].id);
+    for (_j = 0, _len2 = slides.length; _j < _len2; _j++) {
+      slide = slides[_j];
+      console.log("slide.id = " + slide.id + ", hash = " + (window.location.hash.slice(1)));
+      if (slide.id = window.location.hash.slice(1)) {
+        slideCount = _i;
       }
-      i++;
     }
   }
-  i = 0;
-  _results = [];
-  while (i < elems.length) {
-    if (i === slideCount) {
-      elems[i].style.display = "inline";
-      elems[i].style.opacity = 1;
+  console.log("slideCount is currently " + slideCount);
+  j = 0;
+  for (_k = 0, _len3 = slides.length; _k < _len3; _k++) {
+    slide = slides[_k];
+    if (slideCount = j) {
+      slide.style.display = 'inline';
+      slide.style.opacity = 1;
     } else {
-      elems[i].style.display = "none";
-      elems[i].style.opacity = 0.0;
+      slide.style.display = 'none';
+      slide.style.opacity = 0;
     }
-    _results.push(i++);
+    j++;
   }
-  return _results;
+  return null;
+  /* old:
+  i = 0
+  while i < slides.length
+    if i = slideCount
+      slides[i].style.display = "inline"
+      slides[i].style.opacity = 1
+    else
+      slides[i].style.display = "none"
+      slides[i].style.opacity = 0.0
+    i++
+  */
 };
 slideControl = function(event) {
   switch (event.which) {
