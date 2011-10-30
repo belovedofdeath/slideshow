@@ -10,19 +10,12 @@
 		<div class="presentation">
 			<article class="slides">
 				<section class="slide" id="landing-slide">
-					test 1<br/>
-						omg omg omg omgo mg<br/>
-						zyrdate comes in a little glass vial<br/>
-						a little glass vial?<br/>
-						<figure>
-							<img src="lib/sample/eskimo_nebula.jpg" width="50%" height="50%" />
-							<figcaption>Eskimo Nebula</figcaption>
-						</figure>
+					test 1
+
 					<aside class="note">
 						Speaker notes!
 					</aside>
 				</section>
-
 
 				<section class="slide" id="landing-slide-2">
 					test 2
@@ -31,7 +24,6 @@
 						Speaker notes!
 					</aside>
 				</section>
-
 
 				<section class="slide" id="landing-slide-3">
 					test 3

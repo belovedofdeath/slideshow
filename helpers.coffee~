@@ -1,3 +1,4 @@
+# keeping this for god-knows why.
 getElementsByClass = (searchClass, node, tag) ->
   console.log "entering getElementsByClassName(#{searchClass}, #{node}, #{tag})"
   unless node? then node = 'document'

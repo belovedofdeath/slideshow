@@ -40,26 +40,18 @@ previousSlide = ->
   # window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
   slides[slideCount].style.display = "inline"
 
-
-
 changeSlide = (direction) ->
-  slides[slideCount].style.display = 'none'
-  slides[slideCount].style.opacity = 0
-  # make sure it doesn't go out of bounds
-  if direction is 'next'
-    slideCount++ if slideCount < slides.length -1
-  if direction is 'previous'
-    slideCount-- if slideCount > 0
-  window.history.pushState('string 1', 'title', '/slideshow/index.htm#' + slides[slideCount].id)
-  # need to make this into a css style instead of hard-coded specifying here
-  slides[slideCount].style.display = 'inline'
-  slides[slideCount].style.opacity = 1
-  slides[slideCount].style.position = 'relative'
-  slides[slideCount].style.left = '0px'
+  if direction?
+    if direction is 'next'
+      nextSlide()
+    if direction is 'prev'
+      previousSlide()
+  # i would like to eventually incorporate a "jump to slide" feature that puts up a little box letting you go back to where you originally came from in the presentation
+  # that same (above) idea could also be use to create a table of contents
 
 speakerNotes = ->
-  hide(notes) if speakerNotesShown
-  display(notes, 'inline') unless speakerNotesShown
+  console.log "speakerNotes() entered"
+  if speakerNotesShown then hide(notes) else display(notes, 'inline')
   speakerNotesShown = !speakerNotesShown
 
 helpMenu = ->
@@ -76,9 +68,9 @@ hide = (group) ->
   for thing in group
     thing.style.display = 'none'
 
-display = (group, displayType) ->
+display = (group, displayType) -> # sets default display type to block, include 'inline' to override
   unless displayType?
     displayType = 'block'
   for thing in group
-    thing.style.display = display
+    thing.style.display = displayType
 
