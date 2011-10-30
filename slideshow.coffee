@@ -1,48 +1,18 @@
 slideCount = 0 # index of array for <section class="slide">
 speakerNotesShown = helpMenuShown = controlsShown = false
-slides = getElementsByClassName('slide', null, 'section')
-notes = getElementsByClassName('note', null, 'aside')
-help = getElementsByClassName('help', null, 'aside')
-controls = getElementsByClassName('controls', null, 'aside')
+slides = document.getElementsByClassName('slide')
+notes = document.getElementsByClassName('note')
+help = document.getElementsByClassName('help')
+controls = document.getElementsByClassName('controls')
 
 load = ->
-  if slides?
-    console.log "slides are there!"
-    for test in slides
-      console.log "this is a slide!"
-    console.log slides
-  else
-    console.log "slides are missing"
-  console.log "window.location.hash: #{window.location.hash.slice(1)}"
   unless window.location.hash.slice(1).length < 1 # for some reason using unless window.location.hash.slice(1)? ... didn't work
-    console.log "check"
-    console.log "slide #3 id: #{slides[2].id}"
     for slide in slides # go through and see if the hash tag in the URL matches any of the ID's for the slides.  if not, keep the slideCount at 0
-      console.log "slide.id = #{slide.id}, hash = #{window.location.hash.slice(1)}"
       if slide.id = window.location.hash.slice(1)
         slideCount = _i
-  console.log "slideCount is currently #{slideCount}"
-  j = 0
-  for slide in slides # for some reason i can't refer to _j in here like i can refer to _i up above??
-    if slideCount = j
-      slide.style.display = 'inline'
-      slide.style.opacity = 1
-    else
-      slide.style.display = 'none'
-      slide.style.opacity = 0
-    j++
-  null
-  ### old:
-  i = 0
-  while i < slides.length
-    if i = slideCount
-      slides[i].style.display = "inline"
-      slides[i].style.opacity = 1
-    else
-      slides[i].style.display = "none"
-      slides[i].style.opacity = 0.0
-    i++
-  ###
+  for slide in slides
+    slide.style.display = 'none'
+  slides[slideCount].style.display = 'inline'
 
 slideControl = (event) ->
   switch event.which
@@ -59,28 +29,16 @@ slideControl = (event) ->
     else
 
 nextSlide = ->
-  elems = getElementsByClassName("slide", null, "section")
-  elems[slideCount].style.display = "none"
-  elems[slideCount].style.opacity = 0
-  slideCount++  if slideCount < (elems.length - 1)
-  window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
-  elems[slideCount].style.display = "inline"
-  elems[slideCount].style.opacity = 1
-  elems[slideCount].style.position = "relative"
-  elems[slideCount].style.left = "0px"
+  slides[slideCount].style.display = "none"
+  slideCount++ if slideCount < (slides.length - 1)
+  # window.history.pushState "string 1", "title", "/slideshow/index.htm#" + slides[slideCount].id
+  slides[slideCount].style.display = "inline"
 
 previousSlide = ->
-  elems = getElementsByClassName("slide", null, "section")
-  elems[slideCount].style.display = "none"
-  elems[slideCount].style.opacity = 0
+  slides[slideCount].style.display = "none"
   slideCount--  if slideCount > 0
-  window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
-  elems[slideCount].style.display = "inline"
-  elems[slideCount].style.opacity = 1
-  elems[slideCount].style.position = "relative"
-  elems[slideCount].style.left = "0px"
-
-
+  # window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
+  slides[slideCount].style.display = "inline"
 
 changeSlide = (direction) ->
   slides[slideCount].style.display = 'none'
