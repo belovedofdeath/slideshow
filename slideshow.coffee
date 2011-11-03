@@ -8,7 +8,7 @@ controls = document.getElementsByClassName('controls')
 load = ->
   unless window.location.hash.slice(1).length < 1 # for some reason using unless window.location.hash.slice(1)? ... didn't work
     for slide in slides # go through and see if the hash tag in the URL matches any of the ID's for the slides.  if not, keep the slideCount at 0
-      if slide.id = window.location.hash.slice(1)
+      if slide.id == window.location.hash.slice(1)
         slideCount = _i
   for slide in slides
     slide.style.display = 'none'
@@ -31,13 +31,13 @@ slideControl = (event) ->
 nextSlide = ->
   slides[slideCount].style.display = "none"
   slideCount++ if slideCount < (slides.length - 1)
-  # window.history.pushState "string 1", "title", "/slideshow/index.htm#" + slides[slideCount].id
+  window.location = "#" + slides[slideCount].id
   slides[slideCount].style.display = "inline"
 
 previousSlide = ->
   slides[slideCount].style.display = "none"
-  slideCount--  if slideCount > 0
-  # window.history.pushState "string 1", "title", "/slideshow/index.htm#" + elems[slideCount].id
+  slideCount-- if slideCount > 0
+  window.location = "#" + slides[slideCount].id
   slides[slideCount].style.display = "inline"
 
 changeSlide = (direction) ->

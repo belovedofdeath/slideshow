@@ -10,7 +10,7 @@ load = function() {
   if (!(window.location.hash.slice(1).length < 1)) {
     for (_i = 0, _len = slides.length; _i < _len; _i++) {
       slide = slides[_i];
-      if (slide.id = window.location.hash.slice(1)) {
+      if (slide.id === window.location.hash.slice(1)) {
         slideCount = _i;
       }
     }
@@ -41,6 +41,7 @@ nextSlide = function() {
   if (slideCount < (slides.length - 1)) {
     slideCount++;
   }
+  window.location = "#" + slides[slideCount].id;
   return slides[slideCount].style.display = "inline";
 };
 previousSlide = function() {
@@ -48,6 +49,7 @@ previousSlide = function() {
   if (slideCount > 0) {
     slideCount--;
   }
+  window.location = "#" + slides[slideCount].id;
   return slides[slideCount].style.display = "inline";
 };
 changeSlide = function(direction) {
